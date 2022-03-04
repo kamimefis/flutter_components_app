@@ -49,6 +49,10 @@ class CardPage extends StatelessWidget {
 
   _card2() {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0)
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Column(children: [
         FadeInImage(
           placeholder: AssetImage('assets/jar-loading.gif'), 
