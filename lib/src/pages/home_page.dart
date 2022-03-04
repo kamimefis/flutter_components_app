@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:components_app/src/providers/menu_provider.dart';
 import 'package:components_app/src/utils/icon_string_util.dart';
-import 'package:components_app/src/pages/alert_page.dart';
+// import 'package:components_app/src/pages/alert_page.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Components App'),
       ),
       body: _list(),
