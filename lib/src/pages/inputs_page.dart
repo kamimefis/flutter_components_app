@@ -12,6 +12,8 @@ class _InputsPageState extends State<InputsPage> {
   String _email= '';
   String _password = '';
   String _date = '';
+  String _selectedOpt = 'Jojo';
+  List _dropdownList = ['Jojo', 'Bojji', 'Saitama', 'Gugu', 'Vash', 'Ein'];
 
   //To assign a date input value to its textfield and display it on screen
   TextEditingController _inputFieldDateController= new TextEditingController(); 
@@ -30,6 +32,8 @@ class _InputsPageState extends State<InputsPage> {
           _createPassword(),
           Divider(),
           _createDate(context),
+          Divider(),
+          _createDropDown(),
           Divider(),
           _createPerson(),
         ],
@@ -64,6 +68,7 @@ class _InputsPageState extends State<InputsPage> {
     return ListTile(
       title: Text('Your name is: ${_name}'),
       subtitle: Text('You email is: ${_email}'),
+      trailing: Text(_selectedOpt),
     );
   }
 
@@ -146,5 +151,35 @@ class _InputsPageState extends State<InputsPage> {
   }
   
 }
+
+
+  List<DropdownMenuItem<String>> getDropDownOptions() {
+    List<DropdownMenuItem<String>> myList= [];
+    _dropdownList.forEach((opt) { 
+      myList.add(DropdownMenuItem(
+        child: Text(opt),
+        value: opt,
+      ));
+    });
+    return myList;
+  }
+
+  Widget _createDropDown() {
+    return Row(
+      children: [
+        Icon(Icons.select_all),
+        SizedBox(width: 30.0,),
+        DropdownButton(
+          value: _selectedOpt,
+          items: getDropDownOptions(), 
+          onChanged: (opt){
+            setState(() {
+              _selectedOpt = opt as String;
+            });
+          }
+        ),
+      ],
+    );
+  }
 
 }
