@@ -9,6 +9,12 @@ class InputsPage extends StatefulWidget {
 class _InputsPageState extends State<InputsPage> {
 
   String _name= '';
+  String _email= '';
+  String _password = '';
+  String _date = '';
+
+  //To assign a date input value to its textfield and display it on screen
+  TextEditingController _inputFieldDateController= new TextEditingController(); 
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +24,12 @@ class _InputsPageState extends State<InputsPage> {
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0 ),
         children: [
           _createInput(),
+          Divider(),
+          _createEmail(),
+          Divider(),
+          _createPassword(),
+          Divider(),
+          _createDate(context),
           Divider(),
           _createPerson(),
         ],
@@ -33,7 +45,7 @@ class _InputsPageState extends State<InputsPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0) 
         ),
-        counter: Text('n° caracteres: ${_name.length}'),
+        counter: Text('n° characters: ${_name.length}'),
         hintText: 'Enter name',
         labelText: 'Name',
         helperText: 'Please, enter your real name',
@@ -51,7 +63,88 @@ class _InputsPageState extends State<InputsPage> {
   Widget _createPerson() {
     return ListTile(
       title: Text('Your name is: ${_name}'),
+      subtitle: Text('You email is: ${_email}'),
     );
   }
+
+  Widget _createEmail() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0)
+        ),
+        labelText: 'Email',
+        hintText: 'Enter your email',
+        prefixIcon: Icon(Icons.email),
+        suffixIcon: Icon(Icons.alternate_email)
+      ),
+      onChanged: (value) => setState(() {
+        _email = value;
+        print('EMAIL:' + _email);
+      }),
+    );
+  }
+
+  Widget _createPassword() {
+    return TextField(
+      // keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        hintText: 'Enter password',
+        // helperText: 'Password',
+        prefixIcon: Icon(Icons.lock_open),
+        suffixIcon: Icon(Icons.lock),
+        // counter: Text('password length: ${_password.length}'),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0)),    
+      ),
+      onChanged: (value) => setState(() {
+        _password= value;
+        print('PASSWORD: ' + value);
+      }),
+    );
+  }
+
+  Widget _createDate(BuildContext context) {
+    return TextField(
+      controller: _inputFieldDateController,
+      enableInteractiveSelection: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0) 
+        ),
+        labelText: 'Date',
+        hintText: 'Enter Date',
+        prefixIcon: Icon(Icons.calendar_month),
+        suffixIcon: Icon(Icons.calendar_today)
+      ),
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+
+        //method to open datepicker dialog:
+        _selectDate(context);
+      },
+    );
+  }
+
+  _selectDate(BuildContext context) async {
+  DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2018),
+    lastDate: DateTime(2023),
+    locale: Locale('es','ES')
+  );
+
+  if(picked != null){
+    setState(() {
+      _date = picked.toString();
+      _inputFieldDateController.text = _date;
+    });
+  }
+  
+}
 
 }
