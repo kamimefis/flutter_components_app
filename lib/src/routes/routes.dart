@@ -6,6 +6,8 @@ import '../pages/home_page.dart';
 import 'package:components_app/src/pages/card_page.dart';
 import 'package:components_app/src/pages/animated_content.dart';
 import 'package:components_app/src/pages/inputs_page.dart';
+import 'package:components_app/src/pages/slider_page.dart';
+
 
 
 
@@ -17,6 +19,7 @@ return <String, WidgetBuilder> {
         'card'  :(context) => CardPage(),
         'animatedContainer': (context) => AnimatedContent(),
         'inputs':(context) => InputsPage(),
+        'slider':(context) => SliderPage(),
       };
 }
 
