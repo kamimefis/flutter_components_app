@@ -63,19 +63,35 @@ class _ListViewPageState extends State<ListViewPage> {
 
 
   Widget _createList() {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _numberList.length,
-      itemBuilder: (BuildContext context, int index){
-
-        final _images= _numberList[index];
-
-        return FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'), 
-          image: NetworkImage('https://picsum.photos/500/300/?image=$_images')
-        );
-      }
+    return RefreshIndicator(
+      onRefresh: refreshPage,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: _numberList.length,
+        itemBuilder: (BuildContext context, int index){
+    
+          final _images= _numberList[index];
+    
+          return FadeInImage(
+            placeholder: AssetImage('assets/jar-loading.gif'), 
+            image: NetworkImage('https://picsum.photos/500/300/?image=$_images')
+          );
+        }
+      ),
     );
+  }
+
+  //method to pull to refresh (refresh page)
+  Future refreshPage() async {
+    const duration= Duration(seconds: 2);
+    Timer(duration, (){
+
+      _numberList.clear(); //to clean list content
+      _lastItem ++; //to get new set of images
+      _addItemsToListView(); //to load new set of images
+
+    });
+    return Future.delayed(duration);
   }
 
 
