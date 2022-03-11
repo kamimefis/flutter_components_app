@@ -34,7 +34,7 @@
         {
             "ruta" : "listView",
             "icon" : "listview",
-            "texto": "List View"
+            "texto": "Scroll List View"
         }
     ]
 }
